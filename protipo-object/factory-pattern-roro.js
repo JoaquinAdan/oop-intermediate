@@ -52,15 +52,21 @@ function Student({
     instagram,
     facebook,
   }
+  const private = {
+    _learningPaths: [],
+  }
+  Object.defineProperty(this, 'learningPaths', {
+    get() {
+      return private._learningPaths
+    },
+    set(newLP) {
+      if (newLP instanceof LearningPath) private._learningPaths.push(newLP)
+      else console.warn(`Tu LP "${newLP?.name}" no es una instancia de LearningPath`)
+    },
+  })
 
-  if (isArray(learningPaths)) {
-    this.learningPaths = []
-
-    for (learningPathIndex in learningPaths) {
-      if (learningPaths[learningPathIndex] instanceof LearningPath) {
-        this.learningPaths.push(learningPaths[learningPathIndex])
-      }
-    }
+  for (learningPathIndex in learningPaths) {
+    this.learningPaths = learningPaths[learningPathIndex]
   }
 
   // const private = {
